@@ -1,0 +1,1111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Affterlens | Professional iPhone Shoots & Reels</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        :root {
+            --bg-cream: #FDFBF7;
+            --bg-cream-dark: #F2ECE4;
+            --text-dark: #2C2825;
+            --text-muted: #6B635E;
+            --accent-gold: #B68D5D;
+            --accent-gold-hover: #9A754B;
+            --border-color: #E6DFD5;
+            --error: #D9534F;
+            --success: #5CB85C;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background-color: var(--bg-cream);
+            color: var(--text-dark);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        h1, h2, h3, h4 {
+            font-family: 'Cormorant Garamond', serif;
+            font-weight: 600;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        button {
+            cursor: pointer;
+            font-family: 'Montserrat', sans-serif;
+            border: none;
+            outline: none;
+        }
+
+        /* Round Logo */
+        .round-logo {
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid var(--accent-gold);
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        }
+
+        /* Custom Modal */
+        .custom-modal-overlay {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(44, 40, 37, 0.8);
+            backdrop-filter: blur(5px);
+            z-index: 10000;
+            display: none;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        .custom-modal-overlay.active {
+            display: flex;
+            opacity: 1;
+        }
+        .custom-modal {
+            background: var(--bg-cream);
+            padding: 40px;
+            border-radius: 8px;
+            max-width: 400px;
+            width: 90%;
+            text-align: center;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+            transform: translateY(20px);
+            transition: transform 0.3s ease;
+        }
+        .custom-modal-overlay.active .custom-modal {
+            transform: translateY(0);
+        }
+        .custom-modal p {
+            font-size: 1.1rem;
+            margin-bottom: 25px;
+            color: var(--text-dark);
+        }
+        .modal-buttons {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+        }
+        .btn-modal {
+            padding: 10px 25px;
+            border-radius: 4px;
+            font-weight: 500;
+            transition: 0.3s;
+        }
+        .btn-primary {
+            background: var(--accent-gold);
+            color: #fff;
+        }
+        .btn-primary:hover {
+            background: var(--accent-gold-hover);
+        }
+        .btn-secondary {
+            background: var(--bg-cream-dark);
+            color: var(--text-dark);
+        }
+        .btn-secondary:hover {
+            background: var(--border-color);
+        }
+
+        /* Navbar */
+        nav {
+            position: fixed;
+            top: 0; width: 100%;
+            background: rgba(253, 251, 247, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 12px 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 1000;
+            border-bottom: 1px solid var(--border-color);
+        }
+        .nav-brand {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: var(--text-dark);
+            letter-spacing: 1px;
+        }
+        .nav-links {
+            display: flex;
+            gap: 30px;
+            align-items: center;
+        }
+        .nav-links a {
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+        .nav-links a:hover {
+            color: var(--accent-gold);
+        }
+        .nav-admin-btn {
+            border: 1px solid var(--accent-gold);
+            padding: 8px 20px;
+            color: var(--accent-gold);
+            border-radius: 4px;
+        }
+        .nav-admin-btn:hover {
+            background: var(--accent-gold);
+            color: #fff;
+        }
+        .mobile-menu-btn {
+            display: none;
+            font-size: 1.5rem;
+            color: var(--text-dark);
+            background: none;
+        }
+
+        /* Hero */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 100px 5% 50px;
+            background: linear-gradient(to bottom, var(--bg-cream-dark), var(--bg-cream));
+        }
+        .hero h1 {
+            font-size: clamp(3rem, 6vw, 5rem);
+            margin-bottom: 20px;
+            color: var(--text-dark);
+        }
+        .hero p {
+            font-size: 1.2rem;
+            color: var(--text-muted);
+            max-width: 600px;
+            margin-bottom: 40px;
+        }
+        .hero-btns .btn {
+            display: inline-block;
+            padding: 15px 35px;
+            background: var(--accent-gold);
+            color: #fff;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            font-size: 0.9rem;
+            border-radius: 4px;
+            transition: 0.3s;
+        }
+        .hero-btns .btn:hover {
+            background: var(--accent-gold-hover);
+            transform: translateY(-2px);
+        }
+
+        /* Sections */
+        section {
+            padding: 100px 5%;
+        }
+        .section-title {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+        }
+        .section-subtitle {
+            text-align: center;
+            color: var(--text-muted);
+            margin-bottom: 50px;
+            font-size: 1.1rem;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        /* About Section */
+        .about-center {
+            max-width: 800px;
+            margin: 0 auto;
+            text-align: center;
+        }
+        .about-center p {
+            margin-bottom: 20px;
+            font-size: 1.1rem;
+            color: var(--text-muted);
+        }
+        .stats {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 50px;
+            margin-top: 40px;
+            padding-top: 40px;
+            border-top: 1px solid var(--border-color);
+        }
+        .stat-item h3 {
+            font-size: 2.5rem;
+            color: var(--accent-gold);
+            margin-bottom: 5px;
+        }
+        .stat-item p {
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--text-dark);
+        }
+
+        /* Media Grids */
+        .media-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 25px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .media-item {
+            position: relative;
+            background: var(--bg-cream-dark);
+            border-radius: 12px;
+            overflow: hidden;
+            aspect-ratio: 9/16;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.05);
+            transition: transform 0.3s;
+        }
+        .media-item:hover {
+            transform: translateY(-5px);
+        }
+        .media-item img, .media-item video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        .media-item video {
+            background: #000;
+        }
+        .empty-message {
+            grid-column: 1/-1;
+            text-align: center;
+            color: var(--text-muted);
+            padding: 40px;
+            background: var(--bg-cream-dark);
+            border-radius: 8px;
+            border: 1px dashed var(--border-color);
+        }
+
+        /* Booking Form */
+        .booking-container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: #fff;
+            padding: 50px;
+            border-radius: 12px;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.03);
+            border: 1px solid var(--border-color);
+        }
+        .form-group {
+            margin-bottom: 25px;
+        }
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 25px;
+        }
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+        input, select, textarea {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid var(--border-color);
+            border-radius: 4px;
+            background: var(--bg-cream);
+            font-family: inherit;
+            font-size: 1rem;
+            transition: 0.3s;
+        }
+        input:focus, select:focus, textarea:focus {
+            border-color: var(--accent-gold);
+            outline: none;
+        }
+        .submit-btn {
+            width: 100%;
+            padding: 15px;
+            background: var(--accent-gold);
+            color: #fff;
+            font-size: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            border-radius: 4px;
+            margin-top: 10px;
+        }
+        .submit-btn:hover {
+            background: var(--accent-gold-hover);
+        }
+        .form-message {
+            margin-top: 20px;
+            padding: 15px;
+            border-radius: 4px;
+            display: none;
+            text-align: center;
+        }
+
+        /* Footer */
+        footer {
+            background: #2C2825;
+            color: #FDFBF7;
+            text-align: center;
+            padding: 60px 5% 30px;
+        }
+        .footer-brand {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 2rem;
+            margin-bottom: 20px;
+        }
+        .footer-brand img {
+            border-color: #FDFBF7;
+        }
+        .footer-socials {
+            margin: 20px 0;
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+        }
+        .footer-socials a {
+            font-size: 1.5rem;
+            transition: 0.3s;
+        }
+        .footer-socials a:hover {
+            color: var(--accent-gold);
+        }
+        .footer-bottom {
+            margin-top: 40px;
+            font-size: 0.85rem;
+            color: rgba(253, 251, 247, 0.6);
+            border-top: 1px solid rgba(255,255,255,0.1);
+            padding-top: 20px;
+        }
+
+        /* Admin Overlay */
+        .admin-overlay {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: var(--bg-cream);
+            z-index: 9999;
+            display: none;
+            overflow-y: auto;
+            -webkit-overflow-scrolling: touch;
+        }
+        .admin-overlay.active {
+            display: block;
+        }
+        
+        /* Admin Login */
+        .admin-login {
+            max-width: 400px;
+            margin: 15vh auto;
+            padding: 40px;
+            background: #fff;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+            text-align: center;
+            width: 90%;
+        }
+        .admin-login h2 {
+            margin-bottom: 20px;
+        }
+        .close-admin {
+            position: absolute;
+            top: 20px; right: 30px;
+            font-size: 2rem;
+            background: none;
+            color: var(--text-dark);
+        }
+
+        /* Admin Dashboard */
+        .admin-dashboard {
+            display: none;
+            padding: 80px 5% 50px;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        .admin-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 40px;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 20px;
+        }
+        .admin-tabs {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+        .tab-btn {
+            padding: 10px 20px;
+            background: var(--bg-cream-dark);
+            border: 1px solid var(--border-color);
+            border-radius: 4px;
+            font-weight: 500;
+        }
+        .tab-btn.active {
+            background: var(--accent-gold);
+            color: #fff;
+            border-color: var(--accent-gold);
+        }
+        .tab-content {
+            display: none;
+        }
+        .tab-content.active {
+            display: block;
+        }
+
+        /* Admin Upload Section */
+        .upload-section {
+            background: #fff;
+            padding: 30px;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+            margin-bottom: 30px;
+        }
+        .upload-area {
+            border: 2px dashed var(--border-color);
+            padding: 40px;
+            text-align: center;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            background: var(--bg-cream);
+        }
+        #upload-progress-container {
+            display: none;
+            margin-top: 15px;
+        }
+        progress {
+            width: 100%;
+            height: 10px;
+            border-radius: 5px;
+        }
+
+        /* Admin Bookings */
+        .booking-card {
+            background: #fff;
+            border: 1px solid var(--border-color);
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 15px;
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr auto;
+            gap: 15px;
+            align-items: center;
+        }
+        .booking-card h4 { margin-bottom: 5px; }
+        .booking-card p { font-size: 0.9rem; color: var(--text-muted); }
+        .booking-actions button {
+            padding: 8px 12px;
+            font-size: 0.8rem;
+            border-radius: 4px;
+            background: #D9534F;
+            color: white;
+        }
+
+        /* Admin Portfolio Grid */
+        .admin-port-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            gap: 15px;
+        }
+        .admin-port-item {
+            position: relative;
+            background: var(--bg-cream-dark);
+            aspect-ratio: 9/16;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        .admin-port-item img, .admin-port-item video {
+            width: 100%; height: 100%; object-fit: cover; background: #000;
+        }
+        .delete-media-btn {
+            position: absolute;
+            top: 10px; right: 10px;
+            background: rgba(217, 83, 79, 0.9);
+            color: white;
+            border: none;
+            width: 30px; height: 30px;
+            border-radius: 50%;
+            font-size: 12px;
+        }
+
+        /* Responsive Mobile Settings */
+        @media (max-width: 768px) {
+            .mobile-menu-btn { display: block; }
+            
+            .nav-links { 
+                display: none; 
+                position: absolute;
+                top: 70px;
+                left: 0;
+                width: 100%;
+                background: rgba(253, 251, 247, 0.98);
+                flex-direction: column;
+                padding: 20px 0;
+                box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+                border-bottom: 1px solid var(--border-color);
+            }
+            .nav-links.active {
+                display: flex;
+            }
+            .nav-admin-btn {
+                width: 80%;
+                text-align: center;
+                margin-top: 10px;
+            }
+            
+            .form-row { grid-template-columns: 1fr; }
+            .stats { gap: 20px; flex-direction: column; }
+            
+            .admin-header { flex-direction: column; gap: 20px; align-items: flex-start; }
+            .booking-card { grid-template-columns: 1fr; text-align: left; }
+            .booking-actions { justify-content: flex-start; display: flex; }
+            .tab-btn { flex: 1 1 calc(50% - 15px); text-align: center; padding: 10px; }
+            .upload-area { padding: 20px; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="custom-modal-overlay" id="customModalOverlay">
+        <div class="custom-modal">
+            <p id="customModalText">Message goes here.</p>
+            <div class="modal-buttons">
+                <button class="btn-modal btn-primary" id="customModalOkBtn">OK</button>
+                <button class="btn-modal btn-secondary" id="customModalCancelBtn" style="display:none;">Cancel</button>
+            </div>
+        </div>
+    </div>
+
+    <nav>
+        <a href="#" class="nav-brand">
+            <img src="logo.png.PNG" alt="Affterlens Logo" class="round-logo">
+            AFFTERLENS
+        </a>
+        <button class="mobile-menu-btn" onclick="toggleMobileMenu()"><i class="fas fa-bars"></i></button>
+        <div class="nav-links">
+            <a href="#about" onclick="toggleMobileMenu()">Our Story</a>
+            <a href="#videos" onclick="toggleMobileMenu()">Reels</a>
+            <a href="#portfolio" onclick="toggleMobileMenu()">Photos</a>
+            <a href="#book" onclick="toggleMobileMenu()">Book a Shoot</a>
+            <a href="#" class="nav-admin-btn" onclick="openAdmin(); toggleMobileMenu();">Admin</a>
+        </div>
+    </nav>
+
+    <section class="hero">
+        <h1>Cinematic Visuals. Professional Edge.</h1>
+        <p>Specializing in high-end iPhone shoots, brand reels, makeup shoots, and creative visual content crafted to make your brand viral.</p>
+        <div class="hero-btns">
+            <a href="#book" class="btn">Start Your Project</a>
+        </div>
+    </section>
+
+    <section id="about">
+        <div class="about-center">
+            <h2 class="section-title">From Afftereffect to Affterlens</h2>
+            <p>What started as a passion project under the name <strong>Afftereffect</strong> has evolved into <strong>Affterlens</strong>—a premium visual content studio. We recognized the power of mobile cinematography early on and mastered the art of iPhone shoots.</p>
+            <p>Based in the heart of <strong>Jalgaon, Maharashtra</strong>, we have spent the last 4 years pushing creative boundaries. Before establishing our local studio presence, we successfully delivered high-quality visuals to over <strong>3000+ clients globally on Fiverr</strong>.</p>
+            <p>Whether you need a viral Instagram Reel, a stunning makeup shoot, a professional model portfolio, or dynamic brand content, Affterlens brings cinematic quality straight to your audience.</p>
+            
+            <div class="stats">
+                <div class="stat-item">
+                    <h3>4+</h3>
+                    <p>Years Experience</p>
+                </div>
+                <div class="stat-item">
+                    <h3>3000+</h3>
+                    <p>Global Clients</p>
+                </div>
+                <div class="stat-item">
+                    <h3><i class="fas fa-map-marker-alt"></i></h3>
+                    <p>Jalgaon, MH</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="videos" style="background: var(--bg-cream-dark);">
+        <h2 class="section-title">Sample Reels & Videos</h2>
+        <p class="section-subtitle">High-quality iPhone cinematic videos, makeup reels, and brand shoots with sound.</p>
+        
+        <div class="media-grid" id="publicVideoGrid">
+            <div class="empty-message">
+                <i class="fas fa-spinner fa-spin fa-2x"></i>
+                <p style="margin-top: 15px;">Loading stunning videos...</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="portfolio">
+        <h2 class="section-title">Photography Portfolio</h2>
+        <p class="section-subtitle">A glimpse into our professional still photography, models, and product shoots.</p>
+        
+        <div class="media-grid" id="publicPortfolioGrid">
+            <div class="empty-message">
+                <i class="fas fa-spinner fa-spin fa-2x"></i>
+                <p style="margin-top: 15px;">Loading beautiful photography...</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="book" style="background: var(--bg-cream-dark);">
+        <h2 class="section-title">Book a Shoot</h2>
+        <p class="section-subtitle">Let's create something viral together. Fill out the form below.</p>
+        
+        <div class="booking-container">
+            <form id="publicBookingForm">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Full Name</label>
+                        <input type="text" id="bName" required placeholder="John Doe">
+                    </div>
+                    <div class="form-group">
+                        <label>Phone Number</label>
+                        <input type="tel" id="bPhone" required placeholder="+91 00000 00000">
+                    </div>
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Email Address</label>
+                        <input type="email" id="bEmail" required placeholder="client@email.com">
+                    </div>
+                    <div class="form-group">
+                        <label>Type of Shoot</label>
+                        <select id="bType" required>
+                            <option value="">Select an option...</option>
+                            <option value="Brand Reel">Brand Reel</option>
+                            <option value="Makeup Shoot">Makeup Shoot</option>
+                            <option value="Model Portfolio">Model Portfolio</option>
+                            <option value="Product Video">Product Video</option>
+                            <option value="Other">Other iPhone Shoot</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>Preferred Location</label>
+                    <input type="text" id="bLocation" placeholder="E.g., Jalgaon Studio or Outdoor Location" required>
+                </div>
+
+                <div class="form-group">
+                    <label>Project Details & Vision</label>
+                    <textarea id="bDetails" rows="4" placeholder="Tell us about the concept, vibe, and what you want to achieve..." required></textarea>
+                </div>
+
+                <button type="submit" class="submit-btn" id="bSubmitBtn">Submit Booking Request</button>
+                <div id="bMessage" class="form-message"></div>
+            </form>
+        </div>
+    </section>
+
+    <footer>
+        <div class="footer-brand">
+            <img src="logo.png.PNG" alt="Affterlens Logo" class="round-logo">
+            AFFTERLENS
+        </div>
+        <p>Professional iPhone Shoots & Reels</p>
+        <p>Jalgaon, Maharashtra | affterlens@gmail.com</p>
+        
+        <div class="footer-socials">
+            <a href="#"><i class="fab fa-instagram"></i></a>
+            <a href="#"><i class="fab fa-youtube"></i></a>
+            <a href="#"><i class="fab fa-whatsapp"></i></a>
+        </div>
+        
+        <div class="footer-bottom">
+            &copy; 2026 Affterlens. All rights reserved. Formerly Afftereffect.
+        </div>
+    </footer>
+
+    <div class="admin-overlay" id="adminSystem">
+        <button class="close-admin" onclick="closeAdmin()">&times;</button>
+        
+        <div class="admin-login" id="adminLoginScreen">
+            <h2>Admin Access</h2>
+            <p style="color: var(--text-muted); margin-bottom: 20px;">Enter passcode to manage site.</p>
+            <input type="password" id="adminPassword" placeholder="Enter Password" style="margin-bottom: 15px;">
+            <button class="submit-btn" onclick="checkAdminPassword()">Login</button>
+            <p id="loginError" style="color: var(--error); margin-top: 15px; display: none;">Incorrect passcode.</p>
+        </div>
+
+        <div class="admin-dashboard" id="adminDashboardScreen">
+            <div class="admin-header">
+                <h2>Affterlens Dashboard</h2>
+                <div class="admin-tabs">
+                    <button class="tab-btn active" onclick="switchTab('tab-bookings')">View Bookings</button>
+                    <button class="tab-btn" onclick="switchTab('tab-portfolio')">Manage Media</button>
+                    <button class="tab-btn" onclick="logoutAdmin()" style="background:var(--error); color:white; border:none;">Logout</button>
+                </div>
+            </div>
+
+            <div id="tab-bookings" class="tab-content active">
+                <h3>Recent Booking Requests</h3>
+                <p style="margin-bottom: 20px; color: var(--text-muted);">Manage client inquiries here.</p>
+                <div id="adminBookingsList">
+                    <p>Loading bookings...</p>
+                </div>
+            </div>
+
+            <div id="tab-portfolio" class="tab-content">
+                <div class="upload-section">
+                    <h3>Upload High Quality Media</h3>
+                    <p style="margin-bottom: 20px; color: var(--text-muted);">Upload videos or photos directly from your device. The website will automatically sort them.</p>
+                    
+                    <div class="upload-area">
+                        <input type="file" id="mediaUploadInput" accept="image/*,video/*" style="margin-bottom: 15px;">
+                        <input type="text" id="mediaCaption" placeholder="Brief caption (e.g., Makeup Shoot - Jalgaon)" style="margin-bottom: 15px; width: 100%;">
+                        <button class="btn btn-primary" id="uploadBtn" onclick="uploadMedia()">Upload Media</button>
+                        
+                        <div id="upload-progress-container">
+                            <p id="upload-status-text" style="font-size: 0.9rem; margin-bottom: 5px;">Uploading...</p>
+                            <progress id="upload-progress" value="0" max="100"></progress>
+                        </div>
+                    </div>
+                </div>
+
+                <h3>All Uploaded Media</h3>
+                <div class="admin-port-grid" id="adminPortfolioGrid">
+                    <p>Loading media items...</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- FIREBASE AND JAVASCRIPT LOGIC -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+        import { getFirestore, collection, addDoc, getDocs, deleteDoc, doc, query, orderBy, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+        import { getStorage, ref, uploadBytesResumable, getDownloadURL, deleteObject } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-storage.js";
+        import { getAuth, signInAnonymously } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
+
+        // This is your REAL Firebase Configuration
+        const firebaseConfig = {
+            apiKey: "AIzaSyDNy75_bzwC7kp-NczAliXqCbg_Jtn_Nlg",
+            authDomain: "affterlens-a3114.firebaseapp.com",
+            projectId: "affterlens-a3114",
+            storageBucket: "affterlens-a3114.firebasestorage.app",
+            messagingSenderId: "917806960492",
+            appId: "1:917806960492:web:dcf6bbbf1f0ad67852ad49",
+            measurementId: "G-26CE4B3ZFQ"
+        };
+
+        // Initialize Firebase
+        let app, db, storage, auth;
+        try {
+            app = initializeApp(firebaseConfig);
+            db = getFirestore(app);
+            storage = getStorage(app);
+            auth = getAuth(app);
+            
+            signInAnonymously(auth).catch((error) => {
+                console.error("Auth error:", error);
+            });
+        } catch(e) {
+            console.error("Firebase Initialization Error: ", e);
+        }
+
+        window.toggleMobileMenu = function() {
+            const nav = document.querySelector('.nav-links');
+            if(nav) nav.classList.toggle('active');
+        };
+
+        const modalOverlay = document.getElementById('customModalOverlay');
+        const modalText = document.getElementById('customModalText');
+        const modalOkBtn = document.getElementById('customModalOkBtn');
+        const modalCancelBtn = document.getElementById('customModalCancelBtn');
+        
+        window.customAlert = function(msg) {
+            modalText.innerHTML = msg;
+            modalCancelBtn.style.display = 'none';
+            modalOverlay.classList.add('active');
+            modalOkBtn.onclick = () => { modalOverlay.classList.remove('active'); };
+        };
+
+        window.customConfirm = function(msg, callback) {
+            modalText.innerHTML = msg;
+            modalCancelBtn.style.display = 'inline-block';
+            modalOverlay.classList.add('active');
+            modalOkBtn.onclick = () => {
+                modalOverlay.classList.remove('active');
+                if(callback) callback();
+            };
+            modalCancelBtn.onclick = () => { modalOverlay.classList.remove('active'); };
+        };
+
+        window.openAdmin = function() {
+            document.getElementById('adminSystem').classList.add('active');
+            document.getElementById('adminPassword').value = '';
+            document.getElementById('loginError').style.display = 'none';
+            document.body.style.overflow = 'hidden';
+        };
+
+        window.closeAdmin = function() {
+            document.getElementById('adminSystem').classList.remove('active');
+            document.body.style.overflow = 'auto'; 
+        };
+
+        window.checkAdminPassword = function() {
+            const pass = document.getElementById('adminPassword').value;
+            if(pass === "robha1405") { 
+                document.getElementById('adminLoginScreen').style.display = 'none';
+                document.getElementById('adminDashboardScreen').style.display = 'block';
+                loadAdminData();
+            } else {
+                document.getElementById('loginError').style.display = 'block';
+            }
+        };
+
+        window.logoutAdmin = function() {
+            document.getElementById('adminLoginScreen').style.display = 'block';
+            document.getElementById('adminDashboardScreen').style.display = 'none';
+            document.getElementById('adminPassword').value = '';
+        };
+
+        window.switchTab = function(tabId) {
+            document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
+            document.querySelectorAll('.tab-btn').forEach(el => el.classList.remove('active'));
+            document.getElementById(tabId).classList.add('active');
+            event.target.classList.add('active');
+        };
+
+        document.getElementById('publicBookingForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const btn = document.getElementById('bSubmitBtn');
+            const msgBox = document.getElementById('bMessage');
+            
+            if(!db) return customAlert("Database not connected.");
+
+            btn.innerText = "Sending...";
+            btn.disabled = true;
+
+            const bookingData = {
+                name: document.getElementById('bName').value,
+                phone: document.getElementById('bPhone').value,
+                email: document.getElementById('bEmail').value,
+                type: document.getElementById('bType').value,
+                location: document.getElementById('bLocation').value,
+                details: document.getElementById('bDetails').value,
+                timestamp: serverTimestamp()
+            };
+
+            try {
+                await addDoc(collection(db, "bookings"), bookingData);
+                msgBox.innerHTML = "<i class='fas fa-check-circle'></i> Request sent successfully! We will contact you soon.";
+                msgBox.style.display = "block";
+                msgBox.style.backgroundColor = "#dff0d8";
+                msgBox.style.color = "#3c763d";
+                document.getElementById('publicBookingForm').reset();
+            } catch (error) {
+                msgBox.innerHTML = "<i class='fas fa-exclamation-triangle'></i> Error sending request.";
+                msgBox.style.display = "block";
+                msgBox.style.backgroundColor = "#f2dede";
+                msgBox.style.color = "#a94442";
+            } finally {
+                btn.innerText = "Submit Booking Request";
+                btn.disabled = false;
+                setTimeout(() => msgBox.style.display = "none", 5000);
+            }
+        });
+
+        async function loadAdminBookings() {
+            if(!db) return;
+            const container = document.getElementById('adminBookingsList');
+            container.innerHTML = "<p>Loading...</p>";
+            try {
+                const q = query(collection(db, "bookings"), orderBy("timestamp", "desc"));
+                const querySnapshot = await getDocs(q);
+                if (querySnapshot.empty) {
+                    container.innerHTML = "<p>No booking requests yet.</p>";
+                    return;
+                }
+                let html = "";
+                querySnapshot.forEach((doc) => {
+                    const data = doc.data();
+                    const date = data.timestamp ? data.timestamp.toDate().toLocaleString() : "Just now";
+                    html += `
+                        <div class="booking-card" id="book-${doc.id}">
+                            <div><h4>${data.name}</h4><p><i class="fas fa-phone"></i> ${data.phone}</p></div>
+                            <div><p><strong>Type:</strong> ${data.type}</p><p><strong>Loc:</strong> ${data.location}</p></div>
+                            <div><p style="font-size:0.8rem">${data.details}</p><p style="font-size:0.7rem; color:#aaa; margin-top:5px;">${date}</p></div>
+                            <div class="booking-actions"><button onclick="deleteBooking('${doc.id}')"><i class="fas fa-trash"></i> Delete</button></div>
+                        </div>`;
+                });
+                container.innerHTML = html;
+            } catch(e) {
+                container.innerHTML = `<p style="color:red">Error: ${e.message}</p>`;
+            }
+        }
+
+        window.deleteBooking = function(id) {
+            customConfirm("Are you sure you want to delete this booking?", async () => {
+                try {
+                    await deleteDoc(doc(db, "bookings", id));
+                    document.getElementById(`book-${id}`).remove();
+                } catch(e) { customAlert("Error: " + e.message); }
+            });
+        };
+
+        window.uploadMedia = async function() {
+            if(!storage || !db) return customAlert("Firebase not configured.");
+            const fileInput = document.getElementById('mediaUploadInput');
+            const file = fileInput.files[0];
+            if(!file) return customAlert("Please select a photo or video.");
+
+            const isVideo = file.type.startsWith('video/');
+            const fileName = `portfolio/${Date.now()}_${file.name}`;
+            const storageRef = ref(storage, fileName);
+            const uploadTask = uploadBytesResumable(storageRef, file);
+            
+            const progressContainer = document.getElementById('upload-progress-container');
+            const progressBar = document.getElementById('upload-progress');
+            const statusText = document.getElementById('upload-status-text');
+            const uploadBtn = document.getElementById('uploadBtn');
+            
+            progressContainer.style.display = 'block';
+            uploadBtn.disabled = true;
+
+            uploadTask.on('state_changed', 
+                (snapshot) => {
+                    progressBar.value = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+                    statusText.innerText = `Uploading... ${Math.round(progressBar.value)}%`;
+                }, 
+                (error) => {
+                    customAlert("Upload failed: " + error.message);
+                    progressContainer.style.display = 'none'; uploadBtn.disabled = false;
+                }, 
+                async () => {
+                    statusText.innerText = "Processing...";
+                    const downloadURL = await getDownloadURL(uploadTask.snapshot.ref);
+                    try {
+                        await addDoc(collection(db, "portfolio"), {
+                            url: downloadURL,
+                            storagePath: fileName,
+                            caption: document.getElementById('mediaCaption').value || "Affterlens Shoot",
+                            type: isVideo ? "video" : "image",
+                            timestamp: serverTimestamp()
+                        });
+                        customAlert("Upload Successful!");
+                        fileInput.value = ""; document.getElementById('mediaCaption').value = "";
+                        progressContainer.style.display = 'none'; uploadBtn.disabled = false;
+                        loadPortfolioData();
+                    } catch(e) {
+                        customAlert("Database error: " + e.message);
+                        progressContainer.style.display = 'none'; uploadBtn.disabled = false;
+                    }
+                }
+            );
+        };
+
+        async function loadPortfolioData() {
+            if(!db) return;
+            const videoGrid = document.getElementById('publicVideoGrid');
+            const photoGrid = document.getElementById('publicPortfolioGrid');
+            const adminGrid = document.getElementById('adminPortfolioGrid');
+            
+            try {
+                const q = query(collection(db, "portfolio"), orderBy("timestamp", "desc"));
+                const querySnapshot = await getDocs(q);
+                
+                let videoHtml = "";
+                let photoHtml = "";
+                let adminHtml = "";
+                let hasVideos = false;
+                let hasPhotos = false;
+
+                querySnapshot.forEach((doc) => {
+                    const data = doc.data();
+                    
+                    if(data.type === 'video') {
+                        hasVideos = true;
+                        videoHtml += `
+                            <div class="media-item">
+                                <video src="${data.url}" controls preload="metadata"></video>
+                            </div>`;
+                    } else {
+                        hasPhotos = true;
+                        photoHtml += `
+                            <div class="media-item">
+                                <img src="${data.url}" alt="${data.caption}">
+                            </div>`;
+                    }
+
+                    if(adminGrid) {
+                        adminHtml += `
+                            <div class="admin-port-item" id="port-${doc.id}">
+                                ${data.type === 'video' ? `<video src="${data.url}"></video>` : `<img src="${data.url}">`}
+                                <button class="delete-media-btn" onclick="deletePortfolioItem('${doc.id}', '${data.storagePath}')">
+                                    <i class="fas fa-times"></i>
+                                </button>
+                            </div>`;
+                    }
+                });
+
+                videoGrid.innerHTML = hasVideos ? videoHtml : `<div class="empty-message">No videos uploaded yet.</div>`;
+                photoGrid.innerHTML = hasPhotos ? photoHtml : `<div class="empty-message">No photos uploaded yet.</div>`;
+                
+                if(adminGrid) {
+                    adminGrid.innerHTML = (hasVideos || hasPhotos) ? adminHtml : "<p>No media uploaded yet.</p>";
+                }
+
+            } catch(e) {
+                console.error("Error loading data:", e);
+                videoGrid.innerHTML = `<p style="grid-column: 1/-1; text-align:center;">Failed to load.</p>`;
+                photoGrid.innerHTML = `<p style="grid-column: 1/-1; text-align:center;">Failed to load.</p>`;
+            }
+        }
+
+        window.deletePortfolioItem = function(docId, storagePath) {
+            customConfirm("Delete this file permanently?", async () => {
+                try {
+                    await deleteObject(ref(storage, storagePath));
+                    await deleteDoc(doc(db, "portfolio", docId));
+                    document.getElementById(`port-${docId}`).remove();
+                    loadPortfolioData();
+                } catch(e) { customAlert("Error: " + e.message); }
+            });
+        };
+
+        function loadAdminData() {
+            loadAdminBookings();
+            loadPortfolioData();
+        }
+
+        window.onload = () => loadPortfolioData();
+
+    </script>
+</body>
+</html>
